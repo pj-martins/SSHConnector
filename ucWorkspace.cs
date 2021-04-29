@@ -68,7 +68,7 @@ namespace SSHConnector
             NameChanged.Invoke(this, new EventArgs());
         }
 
-        private void runSSH(Terminal terminal)
+        private void runSSH(Terminal terminal, bool captureError = false)
         {
             //string arguments = $"-ssh {Terminal.Host} -P {Terminal.Port}";
             //if (!string.IsNullOrEmpty(Terminal.Key)) arguments += $" -i {Terminal.Key}";
@@ -86,7 +86,7 @@ namespace SSHConnector
             }
             // var startInf = new ProcessStartInfo("cmd.exe", arguments);
             var startInf = new ProcessStartInfo("ssh.exe", arguments.Trim());
-            if (terminal.TunnelSSH)
+            if (terminal.TunnelSSH || captureError)
             {
                 startInf.UseShellExecute = false;
                 startInf.RedirectStandardOutput = true;
@@ -95,6 +95,11 @@ namespace SSHConnector
             }
             var proc = Process.Start(startInf);
             _processes.Add(proc);
+            if (captureError)
+            {
+                var error = proc.StandardError.ReadToEnd();
+                this.Invoke(new Action(() => MessageBox.Show("ERROR:\r\n" + error)));
+            }
             if (terminal.TunnelSSH)
             {
                 DateTime current = DateTime.Now;
@@ -131,10 +136,17 @@ namespace SSHConnector
             {
                 killAllProcesses();
             }
-            this.Invoke(new Action(() =>
+            if (!captureError && (proc.ExitTime - proc.StartTime).TotalSeconds < 10)
             {
-                btnConnect.Text = "Connect";
-            }));
+                runSSH(terminal, true);
+            }
+            else
+            {
+                this.Invoke(new Action(() =>
+                {
+                    btnConnect.Text = "Connect";
+                }));
+            }
         }
 
         private void btnConnect_Click(object sender, EventArgs e)

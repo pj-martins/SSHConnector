@@ -30,6 +30,7 @@ namespace SSHConnector
                 {
                     addWorkspace(terminal, null);
                 }
+                if (tabWorkspaces.TabPages.Any()) tabWorkspaces.SelectedTab = tabWorkspaces.TabPages[0];
             }
         }
 
