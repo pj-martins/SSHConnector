@@ -18,6 +18,7 @@ namespace SSHConnector
     {
         public event EventHandler TerminalSettingsUpdated;
         public event EventHandler NameChanged;
+        public event EventHandler<TerminalAddedEventArgs> TerminalAdded;
         public Terminal Terminal { get; set; }
         private List<Process> _processes;
         public ucWorkspace()
@@ -136,7 +137,7 @@ namespace SSHConnector
             {
                 killAllProcesses();
             }
-            if (!captureError && (proc.ExitTime - proc.StartTime).TotalSeconds < 10)
+            if (!captureError && (proc.ExitTime - proc.StartTime).TotalSeconds < 2)
             {
                 runSSH(terminal, true);
             }
@@ -204,6 +205,21 @@ namespace SSHConnector
                     killProcessAndChildren(Convert.ToInt32(mo["ProcessID"])); //kill child processes(also kills childrens of childrens etc.)
                 }
             }
+        }
+
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            var copy = new Terminal()
+            {
+                Host = Terminal.Host,
+                Key = Terminal.Key,
+                Name = $"{Terminal.Name} Copy",
+                Port = Terminal.Port,
+                TunnelDestination = Terminal.TunnelDestination,
+                TunnelPort = Terminal.TunnelPort,
+                TunnelSSH = Terminal.TunnelSSH
+            };
+            TerminalAdded?.Invoke(this, new TerminalAddedEventArgs(copy));
         }
     }
 }

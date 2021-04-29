@@ -53,6 +53,7 @@ namespace SSHConnector
             uc.Terminal = terminal;
             uc.TerminalSettingsUpdated += Uc_TerminalSettingsUpdated;
             uc.NameChanged += Uc_NameChanged;
+            uc.TerminalAdded += Uc_TerminalAdded;
             tabPage.Controls.Add(uc);
             if (add)
             {
@@ -60,6 +61,11 @@ namespace SSHConnector
                 tabWorkspaces.SelectedTab = tabPage;
             }
             return uc;
+        }
+
+        private void Uc_TerminalAdded(object sender, TerminalAddedEventArgs e)
+        {
+            addWorkspace(e.Terminal, null);
         }
 
         private void Uc_NameChanged(object sender, EventArgs e)
@@ -83,7 +89,12 @@ namespace SSHConnector
             SettingsHelper.SaveUserSettings<List<Terminal>>(tabWorkspaces.TabPages.Select(p => (p.Controls[0] as ucWorkspace).Terminal).ToList());
         }
 
-        private void tabWorkspaces_TabClosing(object sender, PaJaMa.WinControls.TabControl.TabEventArgs e)
+        private void tabWorkspaces_TabClosed(object sender, PaJaMa.WinControls.TabControl.TabEventArgs e)
+        {
+            saveSettings();
+        }
+
+        private void tabWorkspaces_TabOrderChanged(object sender, PaJaMa.WinControls.TabControl.TabEventArgs e)
         {
             saveSettings();
         }

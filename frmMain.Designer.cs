@@ -43,8 +43,9 @@
             this.tabWorkspaces.Size = new System.Drawing.Size(800, 450);
             this.tabWorkspaces.TabIndex = 0;
             this.tabWorkspaces.WrapTabs = true;
-            this.tabWorkspaces.TabClosing += new PaJaMa.WinControls.TabControl.TabEventHandler(this.tabWorkspaces_TabClosing);
+            this.tabWorkspaces.TabClosed += new PaJaMa.WinControls.TabControl.TabEventHandler(this.tabWorkspaces_TabClosed);
             this.tabWorkspaces.TabAdding += new PaJaMa.WinControls.TabControl.TabEventHandler(this.tabWorkspaces_TabAdding);
+            this.tabWorkspaces.TabOrderChanged += new PaJaMa.WinControls.TabControl.TabEventHandler(this.tabWorkspaces_TabOrderChanged);
             // 
             // frmMain
             // 

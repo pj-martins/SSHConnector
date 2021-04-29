@@ -21,4 +21,13 @@ namespace SSHConnector
             Port = 22;
         }
     }
+
+    public class TerminalAddedEventArgs : EventArgs
+    {
+        public Terminal Terminal { get; private set; }
+        public TerminalAddedEventArgs(Terminal terminal)
+        {
+            Terminal = terminal;
+        }
+    }
 }
