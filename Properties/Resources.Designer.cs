@@ -59,5 +59,75 @@ namespace SSHConnector.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] scp {
+            get {
+                object obj = ResourceManager.GetObject("scp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] sftp {
+            get {
+                object obj = ResourceManager.GetObject("sftp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ssh {
+            get {
+                object obj = ResourceManager.GetObject("ssh", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ssh_add {
+            get {
+                object obj = ResourceManager.GetObject("ssh_add", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ssh_agent {
+            get {
+                object obj = ResourceManager.GetObject("ssh_agent", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ssh_keygen {
+            get {
+                object obj = ResourceManager.GetObject("ssh_keygen", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ssh_keyscan {
+            get {
+                object obj = ResourceManager.GetObject("ssh_keyscan", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

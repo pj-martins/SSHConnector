@@ -14,6 +14,7 @@ namespace SSHConnector
         public string Key { get; set; }
         public int TunnelPort { get; set; }
         public string TunnelDestination { get; set; }
+        public bool TunnelSSH { get; set; }
 
         public Terminal()
         {

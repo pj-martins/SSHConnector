@@ -38,8 +38,10 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtKey = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
-            this.btnOK = new System.Windows.Forms.Button();
+            this.btnConnect = new System.Windows.Forms.Button();
             this.numPort = new System.Windows.Forms.NumericUpDown();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.chkLaunchSSH = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numTunnelPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).BeginInit();
             this.SuspendLayout();
@@ -77,7 +79,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTunnelDestination.Location = new System.Drawing.Point(188, 90);
             this.txtTunnelDestination.Name = "txtTunnelDestination";
-            this.txtTunnelDestination.Size = new System.Drawing.Size(403, 20);
+            this.txtTunnelDestination.Size = new System.Drawing.Size(349, 20);
             this.txtTunnelDestination.TabIndex = 6;
             // 
             // label3
@@ -139,16 +141,16 @@
             this.btnBrowse.UseVisualStyleBackColor = true;
             this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
-            // btnOK
+            // btnConnect
             // 
-            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Location = new System.Drawing.Point(520, 131);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(71, 23);
-            this.btnOK.TabIndex = 11;
-            this.btnOK.Text = "Connect";
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            this.btnConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnConnect.Location = new System.Drawing.Point(496, 121);
+            this.btnConnect.Name = "btnConnect";
+            this.btnConnect.Size = new System.Drawing.Size(95, 23);
+            this.btnConnect.TabIndex = 11;
+            this.btnConnect.Text = "Connect";
+            this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
             // numPort
             // 
@@ -168,12 +170,36 @@
             0,
             0});
             // 
+            // btnSave
+            // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.Location = new System.Drawing.Point(395, 121);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(95, 23);
+            this.btnSave.TabIndex = 12;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // chkLaunchSSH
+            // 
+            this.chkLaunchSSH.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkLaunchSSH.AutoSize = true;
+            this.chkLaunchSSH.Location = new System.Drawing.Point(543, 93);
+            this.chkLaunchSSH.Name = "chkLaunchSSH";
+            this.chkLaunchSSH.Size = new System.Drawing.Size(48, 17);
+            this.chkLaunchSSH.TabIndex = 13;
+            this.chkLaunchSSH.Text = "SSH";
+            this.chkLaunchSSH.UseVisualStyleBackColor = true;
+            // 
             // ucWorkspace
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.chkLaunchSSH);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.numPort);
-            this.Controls.Add(this.btnOK);
+            this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.txtKey);
             this.Controls.Add(this.txtName);
@@ -185,7 +211,7 @@
             this.Controls.Add(this.txtHost);
             this.Controls.Add(this.label1);
             this.Name = "ucWorkspace";
-            this.Size = new System.Drawing.Size(603, 160);
+            this.Size = new System.Drawing.Size(603, 150);
             this.Load += new System.EventHandler(this.frmCreateUpdate_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numTunnelPort)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).EndInit();
@@ -206,7 +232,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtKey;
         private System.Windows.Forms.Button btnBrowse;
-        private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.NumericUpDown numPort;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.CheckBox chkLaunchSSH;
     }
 }

@@ -38,6 +38,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -105,6 +106,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="gksu-root-terminal.ico" />
+    <Content Include="OpenSSH\scp.exe" />
+    <Content Include="OpenSSH\sftp.exe" />
+    <Content Include="OpenSSH\ssh-add.exe" />
+    <Content Include="OpenSSH\ssh-agent.exe" />
+    <Content Include="OpenSSH\ssh-keygen.exe" />
+    <Content Include="OpenSSH\ssh-keyscan.exe" />
+    <Content Include="OpenSSH\ssh.exe" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
