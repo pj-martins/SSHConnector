@@ -117,29 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="putty" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\openssh\putty.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="scp" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\openssh\scp.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="sftp" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\openssh\sftp.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ssh" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\openssh\ssh.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ssh_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\openssh\ssh-add.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ssh_agent" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\openssh\ssh-agent.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ssh_keygen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\openssh\ssh-keygen.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ssh_keyscan" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\openssh\ssh-keyscan.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
 </root>

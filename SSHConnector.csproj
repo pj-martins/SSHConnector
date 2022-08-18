@@ -37,6 +37,9 @@
     <ApplicationIcon>gksu-root-terminal.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Renci.SshNet, Version=2020.0.2.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <HintPath>packages\SSH.NET.2020.0.2\lib\net40\Renci.SshNet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
@@ -51,6 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmExplore.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmExplore.Designer.cs">
+      <DependentUpon>frmExplore.cs</DependentUpon>
+    </Compile>
     <Compile Include="ucWorkspace.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -66,6 +75,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Terminal.cs" />
+    <EmbeddedResource Include="frmExplore.resx">
+      <DependentUpon>frmExplore.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ucWorkspace.resx">
       <DependentUpon>ucWorkspace.cs</DependentUpon>
     </EmbeddedResource>
@@ -82,6 +94,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -107,13 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="gksu-root-terminal.ico" />
-    <Content Include="OpenSSH\scp.exe" />
-    <Content Include="OpenSSH\sftp.exe" />
-    <Content Include="OpenSSH\ssh-add.exe" />
-    <Content Include="OpenSSH\ssh-agent.exe" />
-    <Content Include="OpenSSH\ssh-keygen.exe" />
-    <Content Include="OpenSSH\ssh-keyscan.exe" />
-    <Content Include="OpenSSH\ssh.exe" />
+    <Content Include="OpenSSH\putty.exe" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
