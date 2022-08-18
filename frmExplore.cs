@@ -33,7 +33,16 @@ namespace SSHConnector
 		{
 			string pwd = string.IsNullOrEmpty(Terminal.PasswordEncrypted) ? string.Empty : PaJaMa.Common.EncrypterDecrypter.Decrypt(Terminal.PasswordEncrypted, Terminal.PWD);
 			_client = new Renci.SshNet.SftpClient(Terminal.Host, Terminal.Port, Terminal.User, pwd);
-			_client.Connect();
+			try
+			{
+				_client.Connect();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+				this.Close();
+				return;
+			}
 			this.Text = Terminal.Host;
 			doRefresh();
 		}
