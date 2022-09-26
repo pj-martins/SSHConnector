@@ -20,11 +20,9 @@ namespace SSHConnector
         public event EventHandler NameChanged;
         public event EventHandler<TerminalAddedEventArgs> TerminalAdded;
         public Terminal Terminal { get; set; }
-        private List<Process> _processes;
         public ucWorkspace()
         {
             InitializeComponent();
-            _processes = new List<Process>();
         }
 
         private void frmCreateUpdate_Load(object sender, EventArgs e)
@@ -36,15 +34,6 @@ namespace SSHConnector
             numTunnelPort.Value = Terminal.TunnelPort;
             txtTunnelDestination.Text = Terminal.TunnelDestination;
             chkLaunchSSH.Checked = Terminal.TunnelSSH;
-            this.ParentForm.FormClosing += ParentForm_FormClosing;
-        }
-
-        private void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (_processes.Any())
-            {
-                killAllProcesses();
-            }
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -95,7 +84,6 @@ namespace SSHConnector
                 startInf.CreateNoWindow = true;
             }
             var proc = Process.Start(startInf);
-            _processes.Add(proc);
             if (captureError)
             {
                 var error = proc.StandardError.ReadToEnd();
@@ -122,21 +110,7 @@ namespace SSHConnector
                     runSSH(tunnel);
                 })).Start();
             }
-            else
-            {
-                this.Invoke(new Action(() =>
-                {
-                    btnConnect.Enabled = true;
-                    btnConnect.Text = "Disconnect";
-                }));
-
-            }
             proc.WaitForExit();
-            _processes.Remove(proc);
-            if (_processes.Any())
-            {
-                killAllProcesses();
-            }
             if (!captureError && (proc.ExitTime - proc.StartTime).TotalSeconds < 2)
             {
                 runSSH(terminal, true);
@@ -152,13 +126,6 @@ namespace SSHConnector
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            if (_processes.Any())
-            {
-                killAllProcesses();
-                btnConnect.Text = "Connect";
-            }
-            else
-            {
                 btnConnect.Enabled = false;
                 saveSettings();
 
@@ -167,44 +134,11 @@ namespace SSHConnector
                 {
                     runSSH(Terminal);
                 })).Start();
-            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             saveSettings();
-        }
-
-        private void killAllProcesses()
-        {
-            var pids = _processes.Select(x => x.Id).ToList();
-            pids.ForEach(x => killProcessAndChildren(x));
-            _processes.Clear();
-        }
-
-        private void killProcessAndChildren(int pid)
-        {
-            ManagementObjectSearcher processSearcher = new ManagementObjectSearcher
-              ("Select * From Win32_Process Where ParentProcessID=" + pid);
-            ManagementObjectCollection processCollection = processSearcher.Get();
-
-            try
-            {
-                Process proc = Process.GetProcessById(pid);
-                if (!proc.HasExited) proc.Kill();
-            }
-            catch (ArgumentException)
-            {
-                // Process already exited.
-            }
-
-            if (processCollection != null)
-            {
-                foreach (ManagementObject mo in processCollection)
-                {
-                    killProcessAndChildren(Convert.ToInt32(mo["ProcessID"])); //kill child processes(also kills childrens of childrens etc.)
-                }
-            }
         }
 
         private void btnCopy_Click(object sender, EventArgs e)
@@ -220,6 +154,19 @@ namespace SSHConnector
                 TunnelSSH = Terminal.TunnelSSH
             };
             TerminalAdded?.Invoke(this, new TerminalAddedEventArgs(copy));
+        }
+
+        private void btnExplore_Click(object sender, EventArgs e)
+        {
+            var frm = new frmExplore();
+            frm.SettingsChanged += Frm_SettingsChanged;
+            frm.Terminal = Terminal;
+            frm.Show();
+        }
+
+        private void Frm_SettingsChanged(object sender, EventArgs e)
+        {
+            TerminalSettingsUpdated?.Invoke(sender, e);
         }
     }
 }

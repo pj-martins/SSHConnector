@@ -43,6 +43,7 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.chkLaunchSSH = new System.Windows.Forms.CheckBox();
             this.btnCopy = new System.Windows.Forms.Button();
+            this.btnExplore = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numTunnelPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).BeginInit();
             this.SuspendLayout();
@@ -204,10 +205,22 @@
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
+            // btnExplore
+            // 
+            this.btnExplore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExplore.Location = new System.Drawing.Point(395, 121);
+            this.btnExplore.Name = "btnExplore";
+            this.btnExplore.Size = new System.Drawing.Size(95, 23);
+            this.btnExplore.TabIndex = 15;
+            this.btnExplore.Text = "Explore";
+            this.btnExplore.UseVisualStyleBackColor = true;
+            this.btnExplore.Click += new System.EventHandler(this.btnExplore_Click);
+            // 
             // ucWorkspace
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnExplore);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.chkLaunchSSH);
             this.Controls.Add(this.btnSave);
@@ -250,5 +263,6 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.CheckBox chkLaunchSSH;
         private System.Windows.Forms.Button btnCopy;
+        private System.Windows.Forms.Button btnExplore;
     }
 }
