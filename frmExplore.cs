@@ -1,4 +1,5 @@
-﻿using SSHConnector.Properties;
+﻿using PaJaMa.WinControls;
+using SSHConnector.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -24,7 +26,13 @@ namespace SSHConnector
 
         private void frmExplore_Load(object sender, EventArgs e)
         {
+            FormSettings.LoadSettings(this);
             doRefresh();
+        }
+
+        private void frmExplore_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            FormSettings.SaveSettings(this);
         }
 
         private void doRefresh()
@@ -241,6 +249,18 @@ namespace SSHConnector
             if (treeMain.SelectedNode == null) return;
             treeMain.SelectedNode.Nodes.Clear();
             refreshSSHFiles(treeMain.SelectedNode.Tag.ToString(), treeMain.SelectedNode.Nodes);
+        }
+
+        private void viewContentsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (treeMain.SelectedNode == null) return;
+            var file = treeMain.SelectedNode.Tag.ToString();
+            var content = runCommand($"cat {file}");
+            var tmpDir = Path.Combine(Path.GetTempPath(), "GitStudio");
+            if (!Directory.Exists(tmpDir)) Directory.CreateDirectory(tmpDir);
+            var tmpFile = Path.Combine(tmpDir, Guid.NewGuid() + ".tmp");
+            File.WriteAllLines(tmpFile, content);
+            Process.Start($"C:\\Program Files\\Notepad++\\notepad++.exe", tmpFile);
         }
     }
 }

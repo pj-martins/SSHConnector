@@ -31,15 +31,16 @@ namespace SSHConnector
 		{
             this.components = new System.ComponentModel.Container();
             this.treeMain = new PaJaMa.WinControls.MultiSelectTreeView();
+            this.mnuTree = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnUpload = new System.Windows.Forms.Button();
             this.btnDownload = new System.Windows.Forms.Button();
             this.lblFullPath = new System.Windows.Forms.Label();
-            this.mnuTree = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel1.SuspendLayout();
+            this.viewContentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuTree.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeMain
@@ -54,6 +55,21 @@ namespace SSHConnector
             this.treeMain.TabIndex = 0;
             this.treeMain.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeMain_BeforeExpand);
             this.treeMain.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeMain_NodeMouseClick);
+            // 
+            // mnuTree
+            // 
+            this.mnuTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.refreshToolStripMenuItem,
+            this.viewContentsToolStripMenuItem});
+            this.mnuTree.Name = "mnuTree";
+            this.mnuTree.Size = new System.Drawing.Size(151, 48);
+            // 
+            // refreshToolStripMenuItem
+            // 
+            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.refreshToolStripMenuItem.Text = "&Refresh";
+            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
             // 
             // panel1
             // 
@@ -109,19 +125,12 @@ namespace SSHConnector
             this.lblFullPath.TabIndex = 0;
             this.lblFullPath.Text = "/";
             // 
-            // mnuTree
+            // viewContentsToolStripMenuItem
             // 
-            this.mnuTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.refreshToolStripMenuItem});
-            this.mnuTree.Name = "mnuTree";
-            this.mnuTree.Size = new System.Drawing.Size(181, 48);
-            // 
-            // refreshToolStripMenuItem
-            // 
-            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.refreshToolStripMenuItem.Text = "&Refresh";
-            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
+            this.viewContentsToolStripMenuItem.Name = "viewContentsToolStripMenuItem";
+            this.viewContentsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.viewContentsToolStripMenuItem.Text = "&View Contents";
+            this.viewContentsToolStripMenuItem.Click += new System.EventHandler(this.viewContentsToolStripMenuItem_Click);
             // 
             // frmExplore
             // 
@@ -134,10 +143,11 @@ namespace SSHConnector
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Explore";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmExplore_FormClosing);
             this.Load += new System.EventHandler(this.frmExplore_Load);
+            this.mnuTree.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.mnuTree.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -152,5 +162,6 @@ namespace SSHConnector
 		private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.ContextMenuStrip mnuTree;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewContentsToolStripMenuItem;
     }
 }
