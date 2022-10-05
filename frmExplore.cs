@@ -60,13 +60,7 @@ namespace SSHConnector
                     }
 
                     var sub = string.Join(" ", lastParts).Trim();
-                    if (sub.EndsWith("*"))
-                    {
-                        sub = sub.Substring(0, sub.Length - 1).Trim();
-                        var fileNode = nodes.Add(sub);
-                        fileNode.Tag = $"{parentPath}/{sub}";
-                    }
-                    else if (sub.EndsWith("/"))
+                    if (sub.EndsWith("/"))
                     {
                         if (sub.EndsWith("/")) sub = sub.Substring(0, sub.Length - 1).Trim();
                         var dirNode = nodes.Add(sub);
@@ -75,6 +69,9 @@ namespace SSHConnector
                     }
                     else
                     {
+                        if (sub.EndsWith("*")) sub = sub.Substring(0, sub.Length - 1).Trim();
+                        var fileNode = nodes.Add(sub);
+                        fileNode.Tag = $"{parentPath}/{sub}";
                     }
                 }
             }
