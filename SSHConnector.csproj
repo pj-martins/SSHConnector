@@ -57,6 +57,7 @@
     <Compile Include="frmExplore.Designer.cs">
       <DependentUpon>frmExplore.cs</DependentUpon>
     </Compile>
+    <Compile Include="SSHFileDirectory.cs" />
     <Compile Include="ucWorkspace.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -33,12 +33,12 @@ namespace SSHConnector
             this.treeMain = new PaJaMa.WinControls.MultiSelectTreeView();
             this.mnuTree = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewContentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnDelete = new System.Windows.Forms.Button();
             this.btnUpload = new System.Windows.Forms.Button();
             this.btnDownload = new System.Windows.Forms.Button();
             this.lblFullPath = new System.Windows.Forms.Label();
-            this.viewContentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuTree.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -60,9 +60,10 @@ namespace SSHConnector
             // 
             this.mnuTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.refreshToolStripMenuItem,
-            this.viewContentsToolStripMenuItem});
+            this.viewContentsToolStripMenuItem,
+            this.deleteToolStripMenuItem});
             this.mnuTree.Name = "mnuTree";
-            this.mnuTree.Size = new System.Drawing.Size(151, 48);
+            this.mnuTree.Size = new System.Drawing.Size(151, 70);
             // 
             // refreshToolStripMenuItem
             // 
@@ -71,9 +72,15 @@ namespace SSHConnector
             this.refreshToolStripMenuItem.Text = "&Refresh";
             this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
             // 
+            // viewContentsToolStripMenuItem
+            // 
+            this.viewContentsToolStripMenuItem.Name = "viewContentsToolStripMenuItem";
+            this.viewContentsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.viewContentsToolStripMenuItem.Text = "&View Contents";
+            this.viewContentsToolStripMenuItem.Click += new System.EventHandler(this.viewContentsToolStripMenuItem_Click);
+            // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btnDelete);
             this.panel1.Controls.Add(this.btnUpload);
             this.panel1.Controls.Add(this.btnDownload);
             this.panel1.Controls.Add(this.lblFullPath);
@@ -82,17 +89,6 @@ namespace SSHConnector
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(566, 34);
             this.panel1.TabIndex = 1;
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelete.Location = new System.Drawing.Point(326, 6);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 3;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnUpload
             // 
@@ -125,12 +121,12 @@ namespace SSHConnector
             this.lblFullPath.TabIndex = 0;
             this.lblFullPath.Text = "/";
             // 
-            // viewContentsToolStripMenuItem
+            // deleteToolStripMenuItem
             // 
-            this.viewContentsToolStripMenuItem.Name = "viewContentsToolStripMenuItem";
-            this.viewContentsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.viewContentsToolStripMenuItem.Text = "&View Contents";
-            this.viewContentsToolStripMenuItem.Click += new System.EventHandler(this.viewContentsToolStripMenuItem_Click);
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteToolStripMenuItem.Text = "&Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // frmExplore
             // 
@@ -159,9 +155,9 @@ namespace SSHConnector
 		private System.Windows.Forms.Button btnUpload;
 		private System.Windows.Forms.Button btnDownload;
 		private System.Windows.Forms.Label lblFullPath;
-		private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.ContextMenuStrip mnuTree;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewContentsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }

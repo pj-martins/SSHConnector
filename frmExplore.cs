@@ -59,20 +59,23 @@ namespace SSHConnector
                         lastParts.Add("/");
                     }
 
+                    var dt = parts.Skip(parts.Count - 4).Take(3);
                     var sub = string.Join(" ", lastParts).Trim();
+                    TreeNode childNode;
                     if (sub.EndsWith("/"))
                     {
                         if (sub.EndsWith("/")) sub = sub.Substring(0, sub.Length - 1).Trim();
-                        var dirNode = nodes.Add(sub);
-                        dirNode.Nodes.Add("__");
-                        dirNode.Tag = $"{parentPath}/{sub}";
+                        childNode = nodes.Add(sub);
+                        childNode.Nodes.Add("__");
                     }
                     else
                     {
                         if (sub.EndsWith("*")) sub = sub.Substring(0, sub.Length - 1).Trim();
-                        var fileNode = nodes.Add(sub);
-                        fileNode.Tag = $"{parentPath}/{sub}";
+                        childNode = nodes.Add(sub);
+                        
                     }
+
+                    childNode.Tag = new SSHFileDirectory() { Path = $"{parentPath}/{sub}", ModifiedDate = string.Join(" ", dt) };
                 }
             }
             lblFullPath.Text = curr;
@@ -118,7 +121,7 @@ namespace SSHConnector
             if (e.Node.Nodes.Count == 1 && e.Node.Nodes[0].Text == "__")
             {
                 e.Node.Nodes.Clear();
-                refreshSSHFiles(e.Node.Tag.ToString(), e.Node.Nodes);
+                refreshSSHFiles((e.Node.Tag as SSHFileDirectory).Path, e.Node.Nodes);
             }
         }
 
@@ -229,35 +232,34 @@ namespace SSHConnector
             //doRefresh();
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            //if (MessageBox.Show("Are you sure?", "Delete", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
-            //var selected = treeMain.SelectedNodes.Select(n => n.Tag as SftpFile);
-            //foreach (var file in selected)
-            //{
-            //    if (file.IsDirectory) _client.DeleteDirectory(file.FullName);
-            //    else _client.DeleteFile(file.FullName);
-            //}
-            //doRefresh();
-        }
-
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (treeMain.SelectedNode == null) return;
             treeMain.SelectedNode.Nodes.Clear();
-            refreshSSHFiles(treeMain.SelectedNode.Tag.ToString(), treeMain.SelectedNode.Nodes);
+            refreshSSHFiles((treeMain.SelectedNode.Tag as SSHFileDirectory).Path, treeMain.SelectedNode.Nodes);
         }
 
         private void viewContentsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (treeMain.SelectedNode == null) return;
-            var file = treeMain.SelectedNode.Tag.ToString();
+            var file = (treeMain.SelectedNode.Tag as SSHFileDirectory).Path;
             var content = runCommand($"cat {file}");
             var tmpDir = Path.Combine(Path.GetTempPath(), "GitStudio");
             if (!Directory.Exists(tmpDir)) Directory.CreateDirectory(tmpDir);
             var tmpFile = Path.Combine(tmpDir, Guid.NewGuid() + ".tmp");
             File.WriteAllLines(tmpFile, content);
             Process.Start($"C:\\Program Files\\Notepad++\\notepad++.exe", tmpFile);
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure?", "Delete", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            foreach (var node in treeMain.SelectedNodes.ToList())
+            {
+                var file = (node.Tag as SSHFileDirectory).Path;
+                runCommand($"rm {file}");
+                treeMain.Nodes.Remove(node);
+            }
         }
     }
 }
