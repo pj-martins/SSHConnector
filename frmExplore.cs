@@ -141,8 +141,9 @@ namespace SSHConnector
 
         private void viewContentsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            var selected = lstSearchResults.SelectedItem.ToString();
-            viewContents(selected);
+            var item = lstSearchResults.SelectedItem;
+            var file = item is SSHFileContentsSearchResults csr ? csr.Path : item.ToString();
+            viewContents(file);
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -242,21 +243,25 @@ namespace SSHConnector
             {
                 Terminal.LastDownloaded = folder.SelectedPath;
                 SettingsChanged?.Invoke(this, new EventArgs());
-                var content = _sshHelper.RunCommand($"cat {lstSearchResults.SelectedItem}");
-                File.WriteAllLines(Path.Combine(folder.SelectedPath, lstSearchResults.SelectedValue.ToString().Split('/').Last()), content);
+                var item = lstSearchResults.SelectedItem;
+                var file = item is SSHFileContentsSearchResults csr ? csr.Path : item.ToString();
+                var content = _sshHelper.RunCommand($"cat {file}");
+                File.WriteAllLines(Path.Combine(folder.SelectedPath, file.Split('/').Last()), content);
             }
         }
 
-        private void findToolStripMenuItem_Click(object sender, EventArgs e)
+        private void find(bool inFiles)
         {
-            var input = InputBox.Show("Enter file or directory name", "File/Directory");
+            var input = inFiles ?
+                InputBox.Show("Enter search text", "Search text") :
+                InputBox.Show("Enter file or directory name", "File/Directory");
             if (input.Result == DialogResult.OK)
             {
                 var nodes = treeMain.SelectedNodes.ToList();
                 BackgroundWorker worker = new BackgroundWorker();
                 worker.WorkerSupportsCancellation = true;
                 List<SSHFileDirectory> symLinks = new List<SSHFileDirectory>();
-                List<string> results = new List<string>();
+                List<object> results = new List<object>();
                 worker.DoWork += (object bwsender, DoWorkEventArgs bwe) =>
                 {
                     foreach (var node in nodes)
@@ -266,8 +271,9 @@ namespace SSHConnector
                         {
                             if (worker.CancellationPending) return;
                             results.AddRange(
-                                _sshHelper.RunCommand($"cd {tag.Path} && sudo find ./ -name '{input.Text}'")
-                                .Select(x => $"{tag.Path}{x.Substring(1)}")
+                                _sshHelper.RunCommand($"cd {tag.Path} && sudo {(inFiles ? "grep -rnw './' -e" : "find ./ -name")} '{input.Text}'")
+                                .Select(x => inFiles ? (object)new SSHFileContentsSearchResults() { Path = $"{tag.Path}{x.Split(':')[0].Substring(1)}", Containing = String.Join(":", x.Split(':').Skip(1)) }
+                                : $"{tag.Path}{x.Substring(1)}")
                                 );
                         }
                     }
@@ -277,6 +283,16 @@ namespace SSHConnector
                 results.ForEach(x => lstSearchResults.Items.Add(x));
                 splitContainer1.Panel2Collapsed = false;
             }
+        }
+
+        private void findToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            find(false);
+        }
+
+        private void findInFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            find(true);
         }
     }
 }

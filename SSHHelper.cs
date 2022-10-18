@@ -118,4 +118,14 @@ namespace SSHConnector
             return $"{Path}     {ModifiedDate}";
         }
     }
+
+    public class SSHFileContentsSearchResults
+    {
+        public string Path { get; set; }
+        public string Containing { get; set; }
+        public override string ToString()
+        {
+            return $"{Path}:{Containing}";
+        }
+    }
 }
