@@ -257,6 +257,12 @@ namespace SSHConnector
                 InputBox.Show("Enter file or directory name", "File/Directory");
             if (input.Result == DialogResult.OK)
             {
+                var filt = string.Empty;
+                if (inFiles)
+                {
+                    var fileFilt = InputBox.Show("Match files by (optional)", "Match files");
+                    if (fileFilt.Result == DialogResult.OK) filt = fileFilt.Text;
+                }
                 var nodes = treeMain.SelectedNodes.ToList();
                 BackgroundWorker worker = new BackgroundWorker();
                 worker.WorkerSupportsCancellation = true;
@@ -271,7 +277,7 @@ namespace SSHConnector
                         {
                             if (worker.CancellationPending) return;
                             results.AddRange(
-                                _sshHelper.RunCommand($"cd {tag.Path} && sudo {(inFiles ? "grep -rnw './' -e" : "find ./ -name")} '{input.Text}'")
+                                _sshHelper.RunCommand($"cd {tag.Path} && sudo {(inFiles ? $"grep{(!string.IsNullOrEmpty(filt) ? $" --include=\"{filt}\"" : "")} -rnw './' -e" : "find ./ -name")} '{input.Text}'")
                                 .Select(x => inFiles ? (object)new SSHFileContentsSearchResults() { Path = $"{tag.Path}{x.Split(':')[0].Substring(1)}", Containing = String.Join(":", x.Split(':').Skip(1)) }
                                 : $"{tag.Path}{x.Substring(1)}")
                                 );
