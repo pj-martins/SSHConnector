@@ -151,8 +151,9 @@ namespace SSHConnector
             if (MessageBox.Show("Are you sure?", "Delete", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
             foreach (var node in treeMain.SelectedNodes.ToList())
             {
-                var file = (node.Tag as SSHFileDirectory).Path;
-                _sshHelper.RunCommand($"rm {file}");
+                if (node.Tag == null) continue;
+                var sshFileDir = node.Tag as SSHFileDirectory;
+                _sshHelper.RunCommand($"rm{(sshFileDir.IsDirectory ? " -r" : "")} {sshFileDir.Path}");
                 treeMain.Nodes.Remove(node);
             }
         }
