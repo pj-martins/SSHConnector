@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using PaJaMa.WinControls;
 using PaJaMa.Common;
 using System.Threading;
+using System.IO;
 
 namespace SSHConnector
 {
@@ -36,6 +37,16 @@ namespace SSHConnector
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (this.WindowState == FormWindowState.Minimized) return;
+
+            try
+            {
+                var tmpDir = Path.Combine(Path.GetTempPath(), "SSHConnector");
+                if (Directory.Exists(tmpDir))
+                    Directory.Delete(tmpDir, true);
+            }
+            catch { }
+
             FormSettings.SaveSettings(this);
         }
 

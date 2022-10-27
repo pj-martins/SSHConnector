@@ -125,7 +125,7 @@ namespace SSHConnector
         private void viewContents(string path)
         {
             var content = _sshHelper.RunCommand($"cat {path}");
-            var tmpDir = Path.Combine(Path.GetTempPath(), "GitStudio");
+            var tmpDir = Path.Combine(Path.GetTempPath(), "SSHConnector");
             if (!Directory.Exists(tmpDir)) Directory.CreateDirectory(tmpDir);
             var tmpFile = Path.Combine(tmpDir, $"ssh_{Guid.NewGuid()}.tmp");
             File.WriteAllLines(tmpFile, content);
