@@ -13,7 +13,6 @@ namespace SSHConnector
     public class SSHHelper
     {
         private Terminal _terminal;
-        private object _lock = new object();
         public SSHHelper(Terminal terminal)
         {
             _terminal = terminal;
@@ -70,37 +69,8 @@ namespace SSHConnector
 
         public List<string> RunCommand(string command)
         {
-            var lines = new List<string>();
-            if (!File.Exists("ssh.exe"))
-            {
-                File.WriteAllBytes("ssh.exe", Resources.ssh);
-            }
             var args = $"{_terminal.Host} -t \"{command}\"";
-            var inf = new ProcessStartInfo("ssh", args);
-            inf.UseShellExecute = false;
-            inf.RedirectStandardOutput = true;
-            inf.RedirectStandardError = true;
-            inf.StandardOutputEncoding = Encoding.ASCII;
-            inf.StandardErrorEncoding = Encoding.ASCII;
-            inf.WindowStyle = ProcessWindowStyle.Hidden;
-            inf.CreateNoWindow = true;
-            var p = new Process();
-            p.StartInfo = inf;
-            p.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
-            {
-                if (e.Data != null && !e.Data.Contains("Connection "))
-                {
-                    lock (_lock)
-                    {
-                        lines.Add(e.Data);
-                    }
-                }
-            });
-            p.Start();
-            p.BeginOutputReadLine();
-            p.BeginErrorReadLine();
-            p.WaitForExit();
-            return lines;
+            return new ProcessHelper().Run("ssh.exe", Resources.ssh, args).Item1;
         }
     }
 

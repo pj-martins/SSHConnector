@@ -16,6 +16,7 @@ namespace SSHConnector
         public string TunnelDestination { get; set; }
         public bool TunnelSSH { get; set; }
         public string LastDownloaded { get; set; }
+        public string LastUploaded { get; set; }
 
         public Terminal()
         {

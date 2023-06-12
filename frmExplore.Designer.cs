@@ -36,9 +36,9 @@ namespace SSHConnector
             this.viewContentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uploadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnUpload = new System.Windows.Forms.Button();
             this.lblFullPath = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.lstSearchResults = new System.Windows.Forms.ListBox();
@@ -75,6 +75,7 @@ namespace SSHConnector
             this.viewContentsToolStripMenuItem,
             this.deleteToolStripMenuItem,
             this.downloadToolStripMenuItem,
+            this.uploadToolStripMenuItem,
             this.findToolStripMenuItem,
             this.findInFilesToolStripMenuItem});
             this.mnuTree.Name = "mnuTree";
@@ -108,6 +109,13 @@ namespace SSHConnector
             this.downloadToolStripMenuItem.Text = "D&ownload";
             this.downloadToolStripMenuItem.Click += new System.EventHandler(this.downloadToolStripMenuItem_Click);
             // 
+            // uploadToolStripMenuItem
+            // 
+            this.uploadToolStripMenuItem.Name = "uploadToolStripMenuItem";
+            this.uploadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.uploadToolStripMenuItem.Text = "&Upload";
+            this.uploadToolStripMenuItem.Click += new System.EventHandler(this.uploadToolStripMenuItem_Click);
+            // 
             // findToolStripMenuItem
             // 
             this.findToolStripMenuItem.Name = "findToolStripMenuItem";
@@ -117,24 +125,12 @@ namespace SSHConnector
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btnUpload);
             this.panel1.Controls.Add(this.lblFullPath);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 582);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(997, 34);
             this.panel1.TabIndex = 1;
-            // 
-            // btnUpload
-            // 
-            this.btnUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUpload.Location = new System.Drawing.Point(919, 6);
-            this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(75, 23);
-            this.btnUpload.TabIndex = 2;
-            this.btnUpload.Text = "Upload";
-            this.btnUpload.UseVisualStyleBackColor = true;
-            this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
             // 
             // lblFullPath
             // 
@@ -231,13 +227,13 @@ namespace SSHConnector
 
 		private PaJaMa.WinControls.MultiSelectTreeView treeMain;
 		private System.Windows.Forms.Panel panel1;
-		private System.Windows.Forms.Button btnUpload;
 		private System.Windows.Forms.Label lblFullPath;
         private System.Windows.Forms.ContextMenuStrip mnuTree;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewContentsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem uploadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem findToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ListBox lstSearchResults;

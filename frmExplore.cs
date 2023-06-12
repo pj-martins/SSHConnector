@@ -87,34 +87,6 @@ namespace SSHConnector
             lblFullPath.Text = e.Node.Tag.ToString();
         }
 
-        private void btnUpload_Click(object sender, EventArgs e)
-        {
-            //var dlg = new OpenFileDialog();
-            //dlg.Multiselect = true;
-            //if (!string.IsNullOrEmpty(Terminal.LastUploaded)) dlg.InitialDirectory = Terminal.LastUploaded;
-            //if (dlg.ShowDialog() == DialogResult.OK)
-            //{
-            //    BackgroundWorker worker = new BackgroundWorker();
-            //    worker.WorkerSupportsCancellation = true;
-            //    worker.DoWork += (object bwsender, DoWorkEventArgs bwe) =>
-            //    {
-            //        foreach (var file in dlg.FileNames)
-            //        {
-            //            if (worker.CancellationPending) return;
-            //            worker.ReportProgress(0, $"Processing {file}");
-            //            var res = _client.BeginUploadFile(new FileStream(file, FileMode.Open), $"{lblFullPath.Text}/{Path.GetFileName(file)}");
-            //            while (!res.IsCompleted)
-            //            {
-            //                Thread.Sleep(100);
-            //            }
-            //            _client.EndUploadFile(res);
-            //        }
-            //    };
-            //    PaJaMa.WinControls.WinProgressBox.ShowProgress(worker, "", this, true);
-            //}
-            //doRefresh();
-        }
-
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (treeMain.SelectedNode == null) return;
@@ -233,6 +205,41 @@ namespace SSHConnector
             }
         }
 
+        private void uploadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var item = treeMain.SelectedNodes[0].Tag;
+            var dlg = new OpenFileDialog();
+            dlg.Multiselect = true;
+            // if (!string.IsNullOrEmpty(Terminal.LastUploaded)) dlg.InitialDirectory = Terminal.LastUploaded;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+               // Terminal.LastUploaded = dlg.SelectedPath;
+               // SettingsChanged?.Invoke(this, new EventArgs());
+/*
+               BackgroundWorker worker = new BackgroundWorker();
+               worker.WorkerSupportsCancellation = true;
+               worker.DoWork += (object bwsender, DoWorkEventArgs bwe) =>
+               {
+                */
+                   foreach (var file in dlg.FileNames)
+                   {
+                  //     if (worker.CancellationPending) return;
+                  //     worker.ReportProgress(0, $"Processing {file}");
+                       SSHFileDirectory outputPath = treeMain.SelectedNodes[0].Tag as SSHFileDirectory;
+                       string fileName = new FileInfo(file).Name;
+                       var res = new ProcessHelper().Run("scp.exe", Resources.scp, $"-P {Terminal.Port} {file} {Terminal.Host}:{outputPath.Path}/{fileName}");
+                       if (res.Item2.Any())
+                       {
+                            MessageBox.Show(res.Item2[0]);
+                       }
+                   }
+               // };
+               // PaJaMa.WinControls.WinProgressBox.ShowProgress(worker, "", this, true);
+            }
+            doRefresh();
+        }
+
+        
         private void downloadToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             var folder = new FolderBrowserDialog();

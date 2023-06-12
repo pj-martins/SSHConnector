@@ -58,6 +58,7 @@
       <DependentUpon>frmExplore.cs</DependentUpon>
     </Compile>
     <Compile Include="SSHHelper.cs" />
+    <Compile Include="ProcessHelper.cs" />
     <Compile Include="ucWorkspace.cs">
       <SubType>UserControl</SubType>
     </Compile>
