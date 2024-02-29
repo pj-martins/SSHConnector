@@ -119,26 +119,20 @@ namespace SSHConnector
             {
                 this.Invoke(new Action(() =>
                 {
-                    btnConnect.Text = "Connect";
+                    btnOpenShell.Text = "Connect";
                 }));
             }
         }
 
-        private void btnConnect_Click(object sender, EventArgs e)
+        private void btnOpenShell_Click(object sender, EventArgs e)
         {
-                btnConnect.Enabled = false;
-                saveSettings();
-
-                if (!File.Exists("ssh.exe")) File.WriteAllBytes("ssh.exe", Properties.Resources.ssh);
-                new Thread(new ThreadStart(() =>
-                {
-                    runSSH(Terminal);
-                })).Start();
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
+            btnOpenShell.Enabled = false;
             saveSettings();
+            if (!File.Exists("ssh.exe")) File.WriteAllBytes("ssh.exe", Properties.Resources.ssh);
+            new Thread(new ThreadStart(() =>
+            {
+                runSSH(Terminal);
+            })).Start();
         }
 
         private void btnCopy_Click(object sender, EventArgs e)
@@ -156,12 +150,11 @@ namespace SSHConnector
             TerminalAdded?.Invoke(this, new TerminalAddedEventArgs(copy));
         }
 
-        private void btnExplore_Click(object sender, EventArgs e)
+        private void btnConnect_Click(object sender, EventArgs e)
         {
-            var frm = new frmExplore();
-            frm.SettingsChanged += Frm_SettingsChanged;
-            frm.Terminal = Terminal;
-            frm.Show();
+            saveSettings();
+            ucExplore1.Enabled = true;
+            ucExplore1.Connect(Terminal);
         }
 
         private void Frm_SettingsChanged(object sender, EventArgs e)

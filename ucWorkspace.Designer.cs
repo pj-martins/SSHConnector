@@ -1,4 +1,6 @@
-﻿namespace SSHConnector
+﻿using System.Windows.Forms;
+
+namespace SSHConnector
 {
     partial class ucWorkspace
     {
@@ -38,12 +40,11 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtKey = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
-            this.btnConnect = new System.Windows.Forms.Button();
+            this.btnOpenShell = new System.Windows.Forms.Button();
             this.numPort = new System.Windows.Forms.NumericUpDown();
-            this.btnSave = new System.Windows.Forms.Button();
             this.chkLaunchSSH = new System.Windows.Forms.CheckBox();
             this.btnCopy = new System.Windows.Forms.Button();
-            this.btnExplore = new System.Windows.Forms.Button();
+            this.btnConnect = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numTunnelPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).BeginInit();
             this.SuspendLayout();
@@ -143,16 +144,16 @@
             this.btnBrowse.UseVisualStyleBackColor = true;
             this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
-            // btnConnect
+            // btnOpenShell
             // 
-            this.btnConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnConnect.Location = new System.Drawing.Point(496, 121);
-            this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(95, 23);
-            this.btnConnect.TabIndex = 11;
-            this.btnConnect.Text = "Connect";
-            this.btnConnect.UseVisualStyleBackColor = true;
-            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
+            this.btnOpenShell.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOpenShell.Location = new System.Drawing.Point(395, 121);
+            this.btnOpenShell.Name = "btnOpenShell";
+            this.btnOpenShell.Size = new System.Drawing.Size(95, 23);
+            this.btnOpenShell.TabIndex = 11;
+            this.btnOpenShell.Text = "Shell";
+            this.btnOpenShell.UseVisualStyleBackColor = true;
+            this.btnOpenShell.Click += new System.EventHandler(this.btnOpenShell_Click);
             // 
             // numPort
             // 
@@ -171,17 +172,6 @@
             0,
             0,
             0});
-            // 
-            // btnSave
-            // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSave.Location = new System.Drawing.Point(116, 121);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(95, 23);
-            this.btnSave.TabIndex = 12;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // chkLaunchSSH
             // 
@@ -205,37 +195,49 @@
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
-            // btnExplore
+            // btnConnect
             // 
-            this.btnExplore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExplore.Location = new System.Drawing.Point(395, 121);
-            this.btnExplore.Name = "btnExplore";
-            this.btnExplore.Size = new System.Drawing.Size(95, 23);
-            this.btnExplore.TabIndex = 15;
-            this.btnExplore.Text = "Explore";
-            this.btnExplore.UseVisualStyleBackColor = true;
-            this.btnExplore.Click += new System.EventHandler(this.btnExplore_Click);
-            // 
+            this.btnConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnConnect.Location = new System.Drawing.Point(496, 121);
+            this.btnConnect.Name = "btnConnect";
+            this.btnConnect.Size = new System.Drawing.Size(95, 23);
+            this.btnConnect.TabIndex = 15;
+            this.btnConnect.Text = "Connect";
+            this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
+            //
+            // ucExplore1
+            //
+            this.ucExplore1 = new ucExplore();
+            this.ucExplore1.Dock = DockStyle.Fill;
+            //
+            // panelControls
+            //
+            this.panelControls = new Panel();
+            this.panelControls.Dock = DockStyle.Top;
+            this.panelControls.Size = new System.Drawing.Size(603, 150);
+             // 
             // ucWorkspace
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnExplore);
-            this.Controls.Add(this.btnCopy);
-            this.Controls.Add(this.chkLaunchSSH);
-            this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.numPort);
-            this.Controls.Add(this.btnConnect);
-            this.Controls.Add(this.btnBrowse);
-            this.Controls.Add(this.txtKey);
-            this.Controls.Add(this.txtName);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.numTunnelPort);
-            this.Controls.Add(this.txtTunnelDestination);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.txtHost);
-            this.Controls.Add(this.label1);
+            this.panelControls.Controls.Add(this.btnConnect);
+            this.panelControls.Controls.Add(this.btnCopy);
+            this.panelControls.Controls.Add(this.chkLaunchSSH);
+            this.panelControls.Controls.Add(this.numPort);
+            this.panelControls.Controls.Add(this.btnOpenShell);
+            this.panelControls.Controls.Add(this.btnBrowse);
+            this.panelControls.Controls.Add(this.txtKey);
+            this.panelControls.Controls.Add(this.txtName);
+            this.panelControls.Controls.Add(this.label4);
+            this.panelControls.Controls.Add(this.numTunnelPort);
+            this.panelControls.Controls.Add(this.txtTunnelDestination);
+            this.panelControls.Controls.Add(this.label3);
+            this.panelControls.Controls.Add(this.label2);
+            this.panelControls.Controls.Add(this.txtHost);
+            this.panelControls.Controls.Add(this.label1);
+            this.Controls.Add(this.ucExplore1);
+            this.Controls.Add(this.panelControls);
             this.Name = "ucWorkspace";
             this.Size = new System.Drawing.Size(603, 150);
             this.Load += new System.EventHandler(this.frmCreateUpdate_Load);
@@ -248,6 +250,7 @@
 
         #endregion
 
+        private System.Windows.Forms.Panel panelControls;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtHost;
         private System.Windows.Forms.Label label2;
@@ -258,11 +261,11 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtKey;
         private System.Windows.Forms.Button btnBrowse;
-        private System.Windows.Forms.Button btnConnect;
+        private System.Windows.Forms.Button btnOpenShell;
         private System.Windows.Forms.NumericUpDown numPort;
-        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.CheckBox chkLaunchSSH;
         private System.Windows.Forms.Button btnCopy;
-        private System.Windows.Forms.Button btnExplore;
+        private System.Windows.Forms.Button btnConnect;
+        private ucExplore ucExplore1;
     }
 }

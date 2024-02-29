@@ -15,27 +15,22 @@ using System.Windows.Forms;
 
 namespace SSHConnector
 {
-    public partial class frmExplore : Form
+    public partial class ucExplore : UserControl
     {
-        public Terminal Terminal { get; set; }
+        private Terminal _terminal;
         private SSHHelper _sshHelper;
         public event EventHandler SettingsChanged;
         private object _lock = new object();
-        public frmExplore()
+        public ucExplore()
         {
             InitializeComponent();
         }
 
-        private void frmExplore_Load(object sender, EventArgs e)
+        public void Connect(Terminal terminal)
         {
-            _sshHelper = new SSHHelper(Terminal);
-            FormSettings.LoadSettings(this);
+            _terminal = terminal;
+            _sshHelper = new SSHHelper(_terminal);
             doRefresh();
-        }
-
-        private void frmExplore_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            FormSettings.SaveSettings(this);
         }
 
         private void doRefresh()
@@ -47,16 +42,22 @@ namespace SSHConnector
         {
             var curr = lblFullPath.Text;
             lblFullPath.Text = "Loading...";
-            List<SSHFileDirectory> filesDirs;
-            if (fileDir == null)
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.WorkerSupportsCancellation = true;
+            List<SSHFileDirectory> filesDirs = null;
+            worker.DoWork += (object bwsender, DoWorkEventArgs bwe) =>
             {
-                filesDirs = _sshHelper.GetFilesDirectories(null);
-            }
-            else
-            {
-                _sshHelper.PopulateChildren(fileDir);
-                filesDirs = fileDir.Children;
-            }
+                if (fileDir == null)
+                {
+                    filesDirs = _sshHelper.GetFilesDirectories(null);
+                }
+                else
+                {
+                    _sshHelper.PopulateChildren(fileDir);
+                    filesDirs = fileDir.Children;
+                }
+            };
+            WinProgressBox.ShowProgress(worker, "", this, true);
             foreach (var fd in filesDirs)
             {
                 TreeNode childNode = nodes.Add(fd.ShortPath);
@@ -182,13 +183,13 @@ namespace SSHConnector
         private void downloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var folder = new FolderBrowserDialog();
-            if (!string.IsNullOrEmpty(Terminal.LastDownloaded))
+            if (!string.IsNullOrEmpty(_terminal.LastDownloaded))
             {
-                folder.SelectedPath = Terminal.LastDownloaded;
+                folder.SelectedPath = _terminal.LastDownloaded;
             }
             if (folder.ShowDialog() == DialogResult.OK)
             {
-                Terminal.LastDownloaded = folder.SelectedPath;
+                _terminal.LastDownloaded = folder.SelectedPath;
                 SettingsChanged?.Invoke(this, new EventArgs());
                 BackgroundWorker worker = new BackgroundWorker();
                 worker.WorkerSupportsCancellation = true;
@@ -227,7 +228,7 @@ namespace SSHConnector
                   //     worker.ReportProgress(0, $"Processing {file}");
                        SSHFileDirectory outputPath = treeMain.SelectedNodes[0].Tag as SSHFileDirectory;
                        string fileName = new FileInfo(file).Name;
-                       var res = new ProcessHelper().Run("scp.exe", Resources.scp, $"-P {Terminal.Port} {file} {Terminal.Host}:{outputPath.Path}/{fileName}");
+                       var res = new ProcessHelper().Run("scp.exe", Resources.scp, $"-P {_terminal.Port} {file} {_terminal.Host}:{outputPath.Path}/{fileName}");
                        if (res.Item2.Any())
                        {
                             MessageBox.Show(res.Item2[0]);
@@ -243,13 +244,13 @@ namespace SSHConnector
         private void downloadToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             var folder = new FolderBrowserDialog();
-            if (!string.IsNullOrEmpty(Terminal.LastDownloaded))
+            if (!string.IsNullOrEmpty(_terminal.LastDownloaded))
             {
-                folder.SelectedPath = Terminal.LastDownloaded;
+                folder.SelectedPath = _terminal.LastDownloaded;
             }
             if (folder.ShowDialog() == DialogResult.OK)
             {
-                Terminal.LastDownloaded = folder.SelectedPath;
+                _terminal.LastDownloaded = folder.SelectedPath;
                 SettingsChanged?.Invoke(this, new EventArgs());
                 var item = lstSearchResults.SelectedItem;
                 var file = item is SSHFileContentsSearchResults csr ? csr.Path : item.ToString();

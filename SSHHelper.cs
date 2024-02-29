@@ -70,7 +70,12 @@ namespace SSHConnector
         public List<string> RunCommand(string command)
         {
             var args = $"{_terminal.Host} -t \"{command}\"";
-            return new ProcessHelper().Run("ssh.exe", Resources.ssh, args).Item1;
+            var res = new ProcessHelper().Run("ssh.exe", Resources.ssh, args);
+            if (res.Item2.Any())
+            {
+                System.Windows.Forms.MessageBox.Show(String.Join("\n", res.Item2));
+            }
+            return res.Item1;
         }
     }
 

@@ -21,13 +21,16 @@ namespace SSHConnector
                 File.WriteAllBytes(executable, resource);
             }
             var inf = new ProcessStartInfo(executable, args);
+            // File.AppendAllText("logs.log", $"C:\\Windows\\System32\\OpenSSH\\{executable} {args}\n");
             inf.UseShellExecute = false;
             inf.RedirectStandardOutput = true;
-            inf.RedirectStandardError = true;
+            // inf.RedirectStandardError = true;
             inf.StandardOutputEncoding = Encoding.ASCII;
-            inf.StandardErrorEncoding = Encoding.ASCII;
+            // inf.StandardErrorEncoding = Encoding.ASCII;
             inf.WindowStyle = ProcessWindowStyle.Hidden;
             inf.CreateNoWindow = true;
+            // inf.WorkingDirectory = "C:\\Windows\\System32\\OpenSSH";
+            // Directory.SetCurrentDirectory(@"C:\PJTools\SSHConnector\bin\Debug");
             var p = new Process();
             p.StartInfo = inf;
             p.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
@@ -40,6 +43,7 @@ namespace SSHConnector
                     }
                 }
             });
+            /*
             p.ErrorDataReceived += new DataReceivedEventHandler((sender, e) =>
             {
                 if (string.IsNullOrEmpty(e.Data)) return;
@@ -48,9 +52,10 @@ namespace SSHConnector
                     errorLines.Add(e.Data);
                 }
             });
+            */
             p.Start();
             p.BeginOutputReadLine();
-            p.BeginErrorReadLine();
+            // p.BeginErrorReadLine();
             p.WaitForExit();
             return new Tuple<List<string>, List<string>>(lines, errorLines);
         }   

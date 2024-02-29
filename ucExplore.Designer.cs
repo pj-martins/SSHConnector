@@ -1,7 +1,7 @@
 ﻿
 namespace SSHConnector
 {
-	partial class frmExplore
+	partial class ucExplore
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -198,19 +198,16 @@ namespace SSHConnector
             this.findInFilesToolStripMenuItem.Text = "F&ind In Files";
             this.findInFilesToolStripMenuItem.Click += new System.EventHandler(this.findInFilesToolStripMenuItem_Click);
             // 
-            // frmExplore
+            // ucExplore
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(997, 616);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.panel1);
-            this.Name = "frmExplore";
-            this.ShowIcon = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Name = "ucExplore";
             this.Text = "Explore";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmExplore_FormClosing);
-            this.Load += new System.EventHandler(this.frmExplore_Load);
+            this.Enabled = false;
             this.mnuTree.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
